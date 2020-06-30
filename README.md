@@ -1,8 +1,16 @@
-# Python code benchmark library
+# Python benchmark library
+[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Python package](https://github.com/Ruzzz/penchmark/workflows/Python%20package/badge.svg?branch=master)
 [![codecov](https://codecov.io/gh/Ruzzz/penchmark/branch/master/graph/badge.svg)](https://codecov.io/gh/Ruzzz/penchmark)
 
-## Examples
+## Installation
+
+```bash
+pip install penchmark
+pip install penchmark[charts]
+```
+
+## Example
 
 ```python
 from penchmark import benchmark_and_print, Callee, InData
