@@ -1,5 +1,5 @@
 # Python code benchmark library
-![Python package](https://github.com/ruzzz/penchmark/workflows/Python%20package/badge.svg)
+![Python package](https://github.com/Ruzzz/penchmark/workflows/Python%20package/badge.svg?branch=master)
 
 ## Examples
 
