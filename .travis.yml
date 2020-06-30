@@ -11,7 +11,7 @@ matrix:
     - python: 3.7
     - python: 3.8
 install:
-  - pip install .[dev,charts]
+  - pip install -e .[dev,charts]
 script:
   - pylint penchmark
   - mypy penchmark

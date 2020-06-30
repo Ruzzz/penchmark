@@ -43,7 +43,8 @@ setuptools.setup(
             'pytest-cov>=2.10.0'
         ],
         'charts': [
-            'matplotlib>=3.2.2',
+            'matplotlib>=3.2.2;python_version>="3.6"',
+            'matplotlib;python_version<"3.6"',
             'pandas>=1.0.5',
             'seaborn>=0.10.1'
         ]
