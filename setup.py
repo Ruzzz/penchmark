@@ -29,6 +29,7 @@ setuptools.setup(
         'Topic :: System :: Benchmark',
         'Topic :: Utilities'
     ],
+    include_package_data=True,
     python_requires='>=3.4',
     install_requires=[
         'tabulate>=0.8.7'

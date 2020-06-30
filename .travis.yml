@@ -11,6 +11,8 @@ matrix:
     - python: 3.7
     - python: 3.8
 install:
-  - pip install tox
+  - pip install .[dev,charts]
 script:
-  - tox
+  - pylint penchmark
+  - mypy penchmark
+  - pytest --disable-pytest-warnings --cov=penchmark penchmark/tests

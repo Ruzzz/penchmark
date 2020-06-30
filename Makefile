@@ -8,4 +8,4 @@ check:
 	pylint penchmark && mypy penchmark
 
 clean:
-	rm -rf *.egg-info/ dist/ build/ .tox/
+	rm -rf *.egg-info/ dist/ build/
