@@ -34,28 +34,7 @@ dataset = (
 benchmark_and_print(callees, dataset)
 ```
 
-### Result
-
-#### small-data
-
-| callee_name   |   elapsed |   ratio |
-|:--------------|----------:|--------:|
-| nop           |    0.0049 |  1.0000 |
-| mul           |    0.0077 |  1.5886 |
-
-#### big-data
-
-| callee_name   |   elapsed |   ratio |
-|:--------------|----------:|--------:|
-| nop           |    0.0000 |  1.0000 |
-| mul           |    0.0001 |  1.7242 |
-
-#### Summary
-
-| callee_name   |   mean |   median |
-|:--------------|-------:|---------:|
-| nop           | 1.0000 |   1.0000 |
-| mul           | 1.6564 |   1.6564 |
+or
 
 ```python
 from penchmark import benchmark_and_print
@@ -73,23 +52,25 @@ benchmark_and_print((mul, nop), dataset)
 
 ### Result
 
-#### small-data
+```
+SMALL-DATA
 
-| callee_name   |   elapsed |   ratio |
-|:--------------|----------:|--------:|
-| __main__.nop  |    0.0049 |  1.0000 |
-| __main__.mul  |    0.0079 |  1.6041 |
+callee_name      elapsed    ratio
+-------------  ---------  -------
+nop               0.0050   1.0000
+mul               0.0079   1.5944
 
-#### big-data
+BIG-DATA
 
-| callee_name   |   elapsed |   ratio |
-|:--------------|----------:|--------:|
-| __main__.nop  |    0.0000 |  1.0000 |
-| __main__.mul  |    0.0001 |  1.7752 |
+callee_name      elapsed    ratio
+-------------  ---------  -------
+nop               0.0001   1.0000
+mul               0.0001   1.7565
 
-#### Summary
+SUMMARY
 
-| callee_name   |   mean |   median |
-|:--------------|-------:|---------:|
-| __main__.nop  | 1.0000 |   1.0000 |
-| __main__.mul  | 1.6896 |   1.6896 |
+callee_name      mean    median
+-------------  ------  --------
+nop            1.0000    1.0000
+mul            1.6754    1.6754
+```

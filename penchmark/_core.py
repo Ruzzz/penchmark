@@ -122,7 +122,7 @@ class NameGenerator:
             if s.startswith('functools'):
                 ret = s[:s.find('(')] + '(..)'
 
-        if ret and hasattr(x, '__module__') and x.__module__:
+        if ret and hasattr(x, '__module__') and x.__module__ and x.__module__ != '__main__':
             ret = x.__module__ + '.' + ret
 
         return ret
