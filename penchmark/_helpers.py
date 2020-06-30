@@ -11,7 +11,6 @@ class AutoPropertiesDictMeta(type):
 
     @classmethod
     def _check_name(mcs, name: str, value: Any = None) -> bool:
-
         return (
             bool(name)
             and name.islower()

@@ -128,14 +128,14 @@ class NameGenerator:
         return ret
 
 
-def benchmark(callees: Iterable[AnyCallee],  # pylint: disable=too-many-branches
+def benchmark(callees: Iterable[AnyCallee],
               dataset: Iterable[AnyInData],
               *,
               count_factor=1.0,
               estimator=None,
               summary=None,
               name_generator=None,
-              verbose=True) -> Tuple[Report, Optional[Any]]:
+              verbose=True) -> Tuple[Report, Optional[Union[Summary, Any]]]:
     """
     :param callees:
     :param dataset:
@@ -147,7 +147,7 @@ def benchmark(callees: Iterable[AnyCallee],  # pylint: disable=too-many-branches
     :return:
     """
 
-    # pylint: disable=too-many-arguments, too-many-locals
+    # pylint: disable=too-many-branches, too-many-arguments, too-many-locals
     if not estimator:
         estimator = Estimator()
     if summary is None:
