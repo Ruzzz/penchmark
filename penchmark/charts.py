@@ -1,10 +1,11 @@
 from pathlib import Path
 
+# pylint: disable=import-error
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-from ._defs import ByDataReport, Report
+from penchmark._defs import ByDataReport, Report
 
 
 def save_chart(data_report: ByDataReport, title: str, fname):

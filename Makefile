@@ -1,11 +1,11 @@
-build:
-	python setup.py sdist bdist_wheel
+check:
+	pylint penchmark && mypy penchmark
 
 test:
 	pytest --disable-pytest-warnings --cov=penchmark penchmark/tests
 
-check:
-	pylint penchmark && mypy penchmark
+build:
+	python setup.py sdist bdist_wheel
 
 clean:
 	rm -rf *.egg-info/ dist/ build/

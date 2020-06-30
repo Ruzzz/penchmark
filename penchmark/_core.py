@@ -6,7 +6,7 @@ from timeit import default_timer
 from types import BuiltinFunctionType, FunctionType, MethodType
 from typing import Any, Dict, Iterable, Optional, Tuple, Union
 
-from ._defs import (
+from penchmark._defs import (
     AnyCallee,
     AnyInData,
     ByDataReport,

@@ -1,4 +1,4 @@
-from .._core import NameGenerator
+from penchmark import NameGenerator
 
 
 def _fn0():

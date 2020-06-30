@@ -20,8 +20,6 @@ setuptools.setup(
         'License :: OSI Approved :: MIT License',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
@@ -30,7 +28,10 @@ setuptools.setup(
         'Topic :: Utilities'
     ],
     include_package_data=True,
-    python_requires='>=3.4',
+    package_data={
+        "": ["*.txt", "*.md"],
+    },
+    python_requires='>=3.6',
     install_requires=[
         'tabulate>=0.8.7'
     ],
@@ -43,8 +44,7 @@ setuptools.setup(
             'pytest-cov>=2.10.0'
         ],
         'charts': [
-            'matplotlib>=3.2.2;python_version>="3.6"',
-            'matplotlib;python_version<"3.6"',
+            'matplotlib>=3.2.2',
             'pandas>=1.0.5',
             'seaborn>=0.10.1'
         ]

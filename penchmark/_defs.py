@@ -1,6 +1,6 @@
 from typing import Any, Callable, Dict, List, NamedTuple, Union, Tuple
 
-from ._helpers import AutoPropertiesDict
+from penchmark._helpers import AutoPropertiesDict
 
 
 CallableAny = Callable[[Any], Any]

@@ -2,7 +2,7 @@ from typing import Any
 
 from tabulate import tabulate
 
-from ._defs import Report
+from penchmark._defs import Report
 
 
 def report_as_md_table(report: Report,

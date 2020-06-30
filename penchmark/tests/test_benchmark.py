@@ -1,10 +1,15 @@
+import time
 from io import StringIO
 from contextlib import redirect_stdout
 from copy import deepcopy
 
 import pytest
 
-from .. import benchmark, Callee, InData
+from penchmark import benchmark, Callee, InData
+
+
+def _long_op():
+    time.sleep(.00005)
 
 
 @pytest.mark.parametrize(
@@ -13,12 +18,12 @@ from .. import benchmark, Callee, InData
         (
             # callees
             (
-                Callee('mul', lambda x: x[0] * x[1]),
-                Callee('nop', lambda x: x)
+                Callee('mul', lambda x: _long_op()),
+                Callee('nop', lambda x: None)
             ),
             # dataset
             (
-                InData('small-data', (2, 1), 1000),
+                InData('small-data', (2, 1), 100),
                 InData('big-data', (200, 10), 10),
                 InData('skipped-data', (1, 1), 0)
             )
