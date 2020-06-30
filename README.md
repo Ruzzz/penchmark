@@ -1,4 +1,4 @@
-# Python code benchmark library [![Build Status](https://travis-ci.org/Ruzzz/penchmark.svg?branch=master)](https://travis-ci.org/Ruzzz/penchmark)
+# Python code benchmark library
 
 ## Examples
 
