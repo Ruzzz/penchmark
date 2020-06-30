@@ -1,5 +1,6 @@
 # Python benchmark library
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PyPI version](https://badge.fury.io/py/penchmark.svg)](https://pypi.org/project/penchmark/)
 ![Python package](https://github.com/Ruzzz/penchmark/workflows/Python%20package/badge.svg?branch=master)
 [![codecov](https://codecov.io/gh/Ruzzz/penchmark/branch/master/graph/badge.svg)](https://codecov.io/gh/Ruzzz/penchmark)
 
