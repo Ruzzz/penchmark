@@ -17,7 +17,7 @@ def report_as_md_table(report: Report,
 
     for data_name, group in report.items():
         if markdown:
-            content += f'### {data_name}\n\n'
+            content += f'#### {data_name}\n\n'
         else:
             content += f'{data_name.upper()}\n\n'
         content += tabulate(group, headers='keys', tablefmt=tablefmt, floatfmt=floatfmt, **kwargs)
@@ -25,7 +25,7 @@ def report_as_md_table(report: Report,
 
     if summary:
         if markdown:
-            content += '### Summary\n\n'
+            content += '#### Summary\n\n'
         else:
             content += 'SUMMARY\n\n'
         content += tabulate(summary, headers='keys', tablefmt=tablefmt, floatfmt=floatfmt, **kwargs)

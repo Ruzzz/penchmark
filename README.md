@@ -50,6 +50,36 @@ dataset = (
 benchmark_and_print((mul, nop), dataset)
 ```
 
+### Markdown result
+
+#### small-data
+
+| callee_name   |   elapsed |   ratio |
+|:--------------|----------:|--------:|
+| nop           |    0.0050 |  1.0000 |
+| mul           |    0.0080 |  1.5842 |
+
+#### big-data
+
+| callee_name   |   elapsed |   ratio |
+|:--------------|----------:|--------:|
+| nop           |    0.0000 |  1.0000 |
+| mul           |    0.0001 |  1.7201 |
+
+#### Summary
+
+| callee_name   |   mean |   median |
+|:--------------|-------:|---------:|
+| nop           | 1.0000 |   1.0000 |
+| mul           | 1.6521 |   1.6521 |
+
+or
+
+```python
+...
+benchmark_and_print((mul, nop), dataset, markdown=False)
+```
+
 ### Result
 
 ```
