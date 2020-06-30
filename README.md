@@ -1,4 +1,5 @@
 # Python code benchmark library
+![Python package](https://github.com/ruzzz/penchmark/workflows/Python%20package/badge.svg)
 
 ## Examples
 
