@@ -48,8 +48,9 @@ jobs:
       run: |
         pytest --disable-pytest-warnings --cov=penchmark --cov-report=xml penchmark/tests
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+    - if: ${{ matrix.python-version == '3.8' }}
+      name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1      
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         file: ./coverage.xml
