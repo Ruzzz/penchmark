@@ -15,10 +15,11 @@ class InData(NamedTuple):
     name: str  # name of data ('data grouped' benchmark name)
     data: Any
     count_of_call: int
+    excepted: Any = None
 
 
 AnyCallee = Union[CallableAny, Callee, Tuple[str, CallableAny]]
-AnyInData = Union[InData, Tuple[str, Any, int]]
+AnyInData = Union[InData, Tuple[str, Any, int], Tuple[str, Any, int, Any]]
 
 
 class ReportItem(AutoPropertiesDict):
@@ -28,10 +29,7 @@ class ReportItem(AutoPropertiesDict):
 
     @property
     def valid(self):
-        try:
-            return hasattr(self, 'elapsed')
-        except KeyError:
-            return False
+        return self.elapsed is not None
 
 
 class SummaryItem(AutoPropertiesDict):

@@ -125,12 +125,9 @@ def callee_with_exceptions(x):
     if not x:
         raise Exception()
 
-def callee_without_exceptions(_):
-    pass
-
 callees = (
     ('callee-with-exceptions', callee_with_exceptions),
-    ('callee-without-exceptions', callee_without_exceptions)
+    ('callee-without-exceptions', lambda x: None)
 )
 dataset = (
     ('valid-data', True, 10),
@@ -158,3 +155,56 @@ benchmark_and_print(callees, dataset)
 | callee_name               |   mean |   median |
 |:--------------------------|-------:|---------:|
 | callee-without-exceptions |      1 |        1 |
+
+#### Excepted using InData
+
+```python
+from penchmark import benchmark_and_print, InData
+
+def mul2_1(sequ): return [x * 2 for x in sequ]
+def mul2_2(sequ): return [x + x for x in sequ]
+
+dataset = (
+    InData(name='small-data', data=(2, 1), count_of_call=100000, excepted=[4, 2]),
+    InData(name='big-data', data=(200, 10), count_of_call=1000, excepted=[400, 20]),
+    InData(name='skipped-data', data=(1, 1), count_of_call=0, excepted=[2, 2])
+)
+benchmark_and_print((mul2_1, mul2_2), dataset)
+```
+
+#### Excepted using tuples
+
+```python
+from penchmark import benchmark_and_print
+
+def mul2_1(sequ): return [x * 2 for x in sequ]
+def mul2_2(sequ): return [x + x for x in sequ]
+
+dataset = (
+    ('small-data', (2, 1), 100000, [4, 2]),
+    ('big-data', (200, 10), 1000, [400, 20]),
+    ('skipped-data', (1, 1), 0, [2, 2])
+)
+benchmark_and_print((mul2_1, mul2_2), dataset)
+```
+
+#### small-data
+
+| callee_name   |   elapsed |   ratio |
+|:--------------|----------:|--------:|
+| mul2_2        |   0.02114 |       1 |
+| mul2_1        |   0.02317 | 1.09603 |
+
+#### big-data
+
+| callee_name   |   elapsed |   ratio |
+|:--------------|----------:|--------:|
+| mul2_2        |   0.00021 |       1 |
+| mul2_1        |   0.00022 | 1.01147 |
+
+#### Summary
+
+| callee_name   |    mean |   median |
+|:--------------|--------:|---------:|
+| mul2_2        | 1       |  1       |
+| mul2_1        | 1.05375 |  1.05375 |

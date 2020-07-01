@@ -21,10 +21,16 @@ from penchmark._defs import (
 
 class Estimator:
 
-    def __call__(self, callee: CallableAny, data: Any, count_of_call: int) -> float:
+    def __call__(self,
+                 callee: CallableAny,
+                 data: Any,
+                 count_of_call: int,
+                 excepted: Any = None) -> float:
         with Estimator.Elapsed() as elapsed:
             for _ in range(count_of_call):
-                callee(data)
+                ret = callee(data)
+                if excepted is not None:
+                    assert ret == excepted
         return elapsed()
 
     class Elapsed:
@@ -55,11 +61,13 @@ class ByDataSummary:
 
     def __call__(self, by_data_report: ByDataReport):
         for x in by_data_report:
-            if x.callee_name not in self._with_errors and x.valid:
-                self.by_data_ratios[x.callee_name].append(x.ratio)
-            else:
-                self._with_errors.add(x.callee_name)
-                del self.by_data_ratios[x.callee_name]
+            if x.callee_name not in self._with_errors:
+                if x.valid:
+                    self.by_data_ratios[x.callee_name].append(x.ratio)
+                else:
+                    self._with_errors.add(x.callee_name)
+                    if x.callee_name in self.by_data_ratios:
+                        del self.by_data_ratios[x.callee_name]
 
     def calc_summary(self) -> Summary:
         ret = []
@@ -124,9 +132,14 @@ class NameGenerator:
             ret = x.__name__  # type: ignore
 
         if not ret:
+            # special cases
+            # - functools.partial
             s = repr(x)
             if s.startswith('functools'):
-                ret = s[:s.find('(')] + '(..)'
+                ret = s[:s.find('(')]
+
+        if not ret and hasattr(x, '__class__'):
+            ret = x.__class__.__name__  # type: ignore
 
         if ret and hasattr(x, '__module__') and x.__module__ and x.__module__ != '__main__':
             ret = x.__module__ + '.' + ret
@@ -162,7 +175,8 @@ def benchmark(callees: Iterable[AnyCallee],
         name_generator = NameGenerator()
     ret = {}
 
-    for data_name, data, count_of_call in dataset:
+    for data_name, data, count_of_call, *data_excepted in dataset:
+        excepted = data_excepted[0] if data_excepted else None
         count_of_call = round(count_of_call * count_factor)
         if count_of_call <= 0:
             continue
@@ -180,7 +194,7 @@ def benchmark(callees: Iterable[AnyCallee],
                 print(' -', callee_name)
 
             try:
-                elapsed = estimator(callee, data, count_of_call)
+                elapsed = estimator(callee, data, count_of_call, excepted)
                 ri = ReportItem(callee_name=callee_name, elapsed=elapsed)
             except Exception:  # pylint: disable=broad-except
                 ri = ReportItem(callee_name=callee_name)

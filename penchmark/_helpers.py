@@ -35,7 +35,7 @@ class AutoPropertiesDictMeta(type):
             self.key = key
 
         def __get__(self, obj, obj_type=None):
-            return obj[self.key]
+            return obj.get(self.key)
 
         def __set__(self, obj, value):
             obj[self.key] = value
