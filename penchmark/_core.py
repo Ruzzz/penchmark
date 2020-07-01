@@ -25,12 +25,12 @@ class Estimator:
                  callee: CallableAny,
                  data: Any,
                  count_of_call: int,
-                 excepted: Any = None) -> float:
+                 expected: Any = None) -> float:
         with Estimator.Elapsed() as elapsed:
             for _ in range(count_of_call):
                 ret = callee(data)
-                if excepted is not None:
-                    assert ret == excepted
+                if expected is not None:
+                    assert ret == expected
         return elapsed()
 
     class Elapsed:
@@ -175,8 +175,8 @@ def benchmark(callees: Iterable[AnyCallee],
         name_generator = NameGenerator()
     ret = {}
 
-    for data_name, data, count_of_call, *data_excepted in dataset:
-        excepted = data_excepted[0] if data_excepted else None
+    for data_name, data, count_of_call, *data_expected in dataset:
+        expected = data_expected[0] if data_expected else None
         count_of_call = round(count_of_call * count_factor)
         if count_of_call <= 0:
             continue
@@ -194,7 +194,7 @@ def benchmark(callees: Iterable[AnyCallee],
                 print(' -', callee_name)
 
             try:
-                elapsed = estimator(callee, data, count_of_call, excepted)
+                elapsed = estimator(callee, data, count_of_call, expected)
                 ri = ReportItem(callee_name=callee_name, elapsed=elapsed)
             except Exception:  # pylint: disable=broad-except
                 ri = ReportItem(callee_name=callee_name)

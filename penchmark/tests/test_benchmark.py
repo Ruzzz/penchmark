@@ -106,7 +106,7 @@ def test_benchmark(callees, dataset):
     ]
 
 
-def test_benchmark_callee_exceptions_and_excepted():
+def test_benchmark_callee_exceptions_and_expected():
 
     def callee_with_exceptions(sequ):
         ret = []
@@ -121,8 +121,8 @@ def test_benchmark_callee_exceptions_and_excepted():
         ('callee-without-exceptions', lambda sequ: [x + x for x in sequ])
     )
     dataset = (
-        InData(name='valid-data', data=(1, 2, 3), count_of_call=10, excepted=[2, 4, 6]),
-        InData(name='invalid-data', data=(1, 0, 3), count_of_call=10, excepted=[2, 0, 6]),
+        InData(name='valid-data', data=(1, 2, 3), count_of_call=10, expected=[2, 4, 6]),
+        InData(name='invalid-data', data=(1, 0, 3), count_of_call=10, expected=[2, 0, 6]),
     )
     report, summary = benchmark(callees, dataset, verbose=False)
     report = deepcopy(report)

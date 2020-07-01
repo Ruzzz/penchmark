@@ -15,7 +15,7 @@ class InData(NamedTuple):
     name: str  # name of data ('data grouped' benchmark name)
     data: Any
     count_of_call: int
-    excepted: Any = None
+    expected: Any = None
 
 
 AnyCallee = Union[CallableAny, Callee, Tuple[str, CallableAny]]

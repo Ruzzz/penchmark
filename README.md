@@ -165,9 +165,9 @@ def mul2_1(sequ): return [x * 2 for x in sequ]
 def mul2_2(sequ): return [x + x for x in sequ]
 
 dataset = (
-    InData(name='small-data', data=(2, 1), count_of_call=100000, excepted=[4, 2]),
-    InData(name='big-data', data=(200, 10), count_of_call=1000, excepted=[400, 20]),
-    InData(name='skipped-data', data=(1, 1), count_of_call=0, excepted=[2, 2])
+    InData(name='small-data', data=(2, 1), count_of_call=100000, expected=[4, 2]),
+    InData(name='big-data', data=(200, 10), count_of_call=1000, expected=[400, 20]),
+    InData(name='skipped-data', data=(1, 1), count_of_call=0, expected=[2, 2])
 )
 benchmark_and_print((mul2_1, mul2_2), dataset)
 ```
