@@ -3,7 +3,7 @@ import setuptools
 with open('README.md', 'r') as f:
     long_description = f.read()
 
-VERSION = '0.0.1'
+VERSION = '0.0.2'
 
 setuptools.setup(
     name='penchmark',
@@ -17,7 +17,6 @@ setuptools.setup(
     url='https://github.com/ruzzz/penchmark',
     packages=setuptools.find_packages(),
     classifiers=[
-        'License :: OSI Approved :: MIT License',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.6',

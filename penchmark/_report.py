@@ -11,7 +11,7 @@ def report_as_md_table(report: Report,
                        markdown=True,
                        **kwargs):
     if not floatfmt:
-        floatfmt = '.4f'
+        floatfmt = '.5f'
     tablefmt = 'pipe' if markdown else 'simple'
     content = ''
 
@@ -20,7 +20,15 @@ def report_as_md_table(report: Report,
             content += f'#### {data_name}\n\n'
         else:
             content += f'{data_name.upper()}\n\n'
-        content += tabulate(group, headers='keys', tablefmt=tablefmt, floatfmt=floatfmt, **kwargs)
+        content += tabulate(
+            group,
+            headers='keys',
+            tablefmt=tablefmt,
+            floatfmt=('g', floatfmt, 'g'),
+            missingval=('', 'ERROR', ''),
+            colalign=('left', 'right', 'right'),
+            **kwargs
+        )
         content += '\n\n'
 
     if summary:
@@ -28,7 +36,7 @@ def report_as_md_table(report: Report,
             content += '#### Summary\n\n'
         else:
             content += 'SUMMARY\n\n'
-        content += tabulate(summary, headers='keys', tablefmt=tablefmt, floatfmt=floatfmt, **kwargs)
+        content += tabulate(summary, headers='keys', tablefmt=tablefmt, **kwargs)
         content += '\n\n'
 
     return content
