@@ -26,6 +26,13 @@ class ReportItem(AutoPropertiesDict):
     elapsed: float
     ratio: float
 
+    @property
+    def valid(self):
+        try:
+            return hasattr(self, 'elapsed')
+        except KeyError:
+            return False
+
 
 class SummaryItem(AutoPropertiesDict):
     callee_name: str

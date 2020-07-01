@@ -48,12 +48,11 @@ def test_benchmark(callees, dataset):
             assert len(f.getvalue()) > 0
 
     # summary
-    report, summary = benchmark(callees, dataset, summary=False)
+    report, summary = benchmark(callees, dataset, summary=False, verbose=False)
     assert summary is None
 
     # main
-    report, summary = benchmark(callees, dataset)
-    assert summary is not None
+    report, summary = benchmark(callees, dataset, verbose=False)
 
     report = deepcopy(report)
     assert len(report['small-data']) == 2
@@ -92,3 +91,65 @@ def test_benchmark(callees, dataset):
             {'callee_name': 'op', 'elapsed': 0, 'ratio': 0}
         ]
     }
+
+    summary = deepcopy(summary)
+    # clear attrs
+    for summary_item in summary:
+        summary_item['callee_name'] = 'op'
+        summary_item['mean'] = 0
+        summary_item['median'] = 0
+
+    # compare structure
+    assert summary == [
+        {'callee_name': 'op', 'mean': 0, 'median': 0},
+        {'callee_name': 'op', 'mean': 0, 'median': 0}
+    ]
+
+
+def test_benchmark_callee_exceptions():
+
+    def callee_with_exceptions(x):
+        if not x:
+            raise Exception()
+
+    def callee_without_exceptions(_):
+        pass
+
+    callees = (
+        ('callee-with-exceptions', callee_with_exceptions),
+        ('callee-without-exceptions', callee_without_exceptions)
+    )
+    dataset = (
+        ('valid-data', True, 10),
+        ('invalid-data', False, 10),
+    )
+    report, summary = benchmark(callees, dataset, verbose=False)
+    report = deepcopy(report)
+
+    # clear attrs
+    reset_attrs = [
+        ('valid-data', 0),
+        ('valid-data', 1),
+        ('invalid-data', 0)
+    ]
+    for data_name, item_index in reset_attrs:
+        report[data_name][item_index]['callee_name'] = 'op'
+        for float_attr in ['elapsed', 'ratio']:
+            report[data_name][item_index][float_attr] = 0
+
+    # compare structure
+    assert report == {
+        'valid-data': [
+            {'callee_name': 'op', 'elapsed': 0, 'ratio': 0},
+            {'callee_name': 'op', 'elapsed': 0, 'ratio': 0}
+        ],
+        'invalid-data': [
+            {'callee_name': 'op', 'elapsed': 0, 'ratio': 0},
+            {'callee_name': 'callee-with-exceptions'}
+        ]
+    }
+
+    # compare structure
+    assert deepcopy(summary) == [
+        {'callee_name': 'callee-without-exceptions', 'mean': 1, 'median': 1}
+    ]

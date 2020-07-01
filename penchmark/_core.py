@@ -1,5 +1,6 @@
 import re
 import statistics
+import sys
 from collections import defaultdict
 from sys import getsizeof
 from timeit import default_timer
@@ -50,10 +51,15 @@ class ByDataSummary:
 
     def __init__(self):
         self.by_data_ratios = defaultdict(list)
+        self._with_errors = set()
 
     def __call__(self, by_data_report: ByDataReport):
         for x in by_data_report:
-            self.by_data_ratios[x.callee_name].append(x.ratio)
+            if x.callee_name not in self._with_errors and x.valid:
+                self.by_data_ratios[x.callee_name].append(x.ratio)
+            else:
+                self._with_errors.add(x.callee_name)
+                del self.by_data_ratios[x.callee_name]
 
     def calc_summary(self) -> Summary:
         ret = []
@@ -173,13 +179,19 @@ def benchmark(callees: Iterable[AnyCallee],
             if verbose:
                 print(' -', callee_name)
 
-            elapsed = estimator(callee, data, count_of_call)
-            group.append(ReportItem(callee_name=callee_name, elapsed=elapsed))
+            try:
+                elapsed = estimator(callee, data, count_of_call)
+                ri = ReportItem(callee_name=callee_name, elapsed=elapsed)
+            except Exception:  # pylint: disable=broad-except
+                ri = ReportItem(callee_name=callee_name)
+            group.append(ri)
 
-        group.sort(key=lambda x: x.elapsed)
+        group.sort(key=lambda x: x.elapsed if x.valid else sys.maxsize)
         first = group[0]
-        for item in group:
-            item.ratio = item.elapsed / first.elapsed
+        if first.valid:
+            for item in group:
+                if item.valid:
+                    item.ratio = item.elapsed / first.elapsed
 
         if summary:
             summary(group)

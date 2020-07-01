@@ -13,6 +13,8 @@ pip install penchmark[charts]
 
 ## Example
 
+#### Classes `Callee`, `InData`
+
 ```python
 from penchmark import benchmark_and_print, Callee, InData
 
@@ -28,7 +30,7 @@ dataset = (
 benchmark_and_print(callees, dataset)
 ```
 
-or
+#### Tuples
 
 ```python
 from penchmark import benchmark_and_print
@@ -45,7 +47,7 @@ dataset = (
 benchmark_and_print(callees, dataset)
 ```
 
-or
+#### Auto generate names of callees
 
 ```python
 from penchmark import benchmark_and_print
@@ -61,37 +63,35 @@ dataset = (
 benchmark_and_print((mul, nop), dataset)
 ```
 
-### Markdown result
+#### Markdown result
 
-#### small-data
+##### small-data
 
 | callee_name   |   elapsed |   ratio |
 |:--------------|----------:|--------:|
 | nop           |    0.0050 |  1.0000 |
 | mul           |    0.0080 |  1.5842 |
 
-#### big-data
+##### big-data
 
 | callee_name   |   elapsed |   ratio |
 |:--------------|----------:|--------:|
 | nop           |    0.0000 |  1.0000 |
 | mul           |    0.0001 |  1.7201 |
 
-#### Summary
+##### Summary
 
 | callee_name   |   mean |   median |
 |:--------------|-------:|---------:|
 | nop           | 1.0000 |   1.0000 |
 | mul           | 1.6521 |   1.6521 |
 
-or
+#### Console mode result
 
 ```python
 ...
 benchmark_and_print((mul, nop), dataset, markdown=False)
 ```
-
-### Result
 
 ```
 SMALL-DATA
@@ -115,3 +115,46 @@ callee_name      mean    median
 nop            1.0000    1.0000
 mul            1.6754    1.6754
 ```
+
+#### Callee with exceptions
+
+```python
+from penchmark import benchmark_and_print
+
+def callee_with_exceptions(x):
+    if not x:
+        raise Exception()
+
+def callee_without_exceptions(_):
+    pass
+
+callees = (
+    ('callee-with-exceptions', callee_with_exceptions),
+    ('callee-without-exceptions', callee_without_exceptions)
+)
+dataset = (
+    ('valid-data', True, 10),
+    ('invalid-data', False, 10),
+)
+benchmark_and_print(callees, dataset)
+```
+
+##### valid-data
+
+| callee_name               |   elapsed |   ratio |
+|:--------------------------|----------:|--------:|
+| callee-without-exceptions |   0.00000 |       1 |
+| callee-with-exceptions    |   0.00000 | 2.36735 |
+
+##### invalid-data
+
+| callee_name               |   elapsed |   ratio |
+|:--------------------------|----------:|--------:|
+| callee-without-exceptions |   0.00000 |       1 |
+| callee-with-exceptions    |     ERROR |         |
+
+##### Summary
+
+| callee_name               |   mean |   median |
+|:--------------------------|-------:|---------:|
+| callee-without-exceptions |      1 |        1 |
