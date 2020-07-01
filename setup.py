@@ -3,7 +3,7 @@ import setuptools
 with open('README.md', 'r') as f:
     long_description = f.read()
 
-VERSION = '0.0.2'
+VERSION = '0.1.0'
 
 setuptools.setup(
     name='penchmark',
