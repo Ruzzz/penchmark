@@ -156,7 +156,7 @@ benchmark_and_print(callees, dataset)
 |:--------------------------|-------:|---------:|
 | callee-without-exceptions |      1 |        1 |
 
-#### Excepted using InData
+#### Expected using InData
 
 ```python
 from penchmark import benchmark_and_print, InData
@@ -172,7 +172,7 @@ dataset = (
 benchmark_and_print((mul2_1, mul2_2), dataset)
 ```
 
-#### Excepted using tuples
+#### Expected using tuples
 
 ```python
 from penchmark import benchmark_and_print
