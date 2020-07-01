@@ -204,7 +204,9 @@ def benchmark(callees: Iterable[AnyCallee],
         first = group[0]
         if first.valid:
             for item in group:
-                if item.valid:
+                if item == first:
+                    item.ratio = 1.0
+                elif item.valid:
                     item.ratio = item.elapsed / first.elapsed
 
         if summary:

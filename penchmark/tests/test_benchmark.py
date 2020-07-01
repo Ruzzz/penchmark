@@ -66,7 +66,7 @@ def test_benchmark(callees, dataset):
             assert callee_name in ('nop', 'mul')
 
             for float_attr in ['elapsed', 'ratio']:
-                assert isinstance(report[data_name][item_index][float_attr], float)
+                assert isinstance(report[data_name][item_index][float_attr], (int, float))
                 assert report[data_name][item_index][float_attr] > 0
 
         assert report[data_name][0]['ratio'] == 1  # first ratio == 1
