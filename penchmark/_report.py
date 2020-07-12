@@ -53,7 +53,12 @@ def report_as_md_table(report: Report,
             content += '#### Summary\n\n'
         else:
             content += 'SUMMARY\n\n'
-        content += tabulate(summary, headers='keys', tablefmt=tablefmt, **kwargs)
+        content += tabulate(
+            summary,
+            headers='keys',
+            tablefmt=tablefmt,
+            colalign=('left', 'right', 'right'),
+            **kwargs)
         content += '\n\n'
 
     return content

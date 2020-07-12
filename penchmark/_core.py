@@ -29,8 +29,8 @@ class Estimator:
         with Estimator.Elapsed() as elapsed:
             for _ in range(count_of_call):
                 ret = callee(data)
-                if expected is not None:
-                    assert ret == expected
+                if expected is not None and ret != expected:
+                    raise Exception('not equals')
         return elapsed()
 
     class Elapsed:
@@ -196,7 +196,9 @@ def benchmark(callees: Iterable[AnyCallee],
             try:
                 elapsed = estimator(callee, data, count_of_call, expected)
                 ri = ReportItem(callee_name=callee_name, elapsed=elapsed)
-            except Exception:  # pylint: disable=broad-except
+            except Exception as err:  # pylint: disable=broad-except
+                if verbose:
+                    print('error:', str(err))
                 ri = ReportItem(callee_name=callee_name)
             group.append(ri)
 
